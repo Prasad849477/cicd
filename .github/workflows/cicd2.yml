@@ -17,7 +17,7 @@ on:
 
 jobs:
   manage-ec2:
-    runs-on: ubuntu-latest
+    runs-on: self1
 
     steps:
       - name: step 1 - Configure AWS credentials
