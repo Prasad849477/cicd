@@ -1,0 +1,44 @@
+name: EC2 Start/Stop
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Start or stop the instance'
+        required: true
+        default: 'start'
+        type: choice
+        options:
+          - start
+          - stop
+      instance_id:
+        description: 'EC2 Instance ID'
+        required: true
+
+jobs:
+  manage-ec2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Start or stop EC2 instance
+        run: |
+          echo "Requested Action: ${{ github.event.inputs.action }}"
+          echo "Instance ID: ${{ github.event.inputs.instance_id }}"
+
+          if [ "${{ github.event.inputs.action }}" = "start" ]; then
+            aws ec2 start-instances --instance-ids ${{ github.event.inputs.instance_id }}
+            echo "✅ Instance started: ${{ github.event.inputs.instance_id }}"
+          elif [ "${{ github.event.inputs.action }}" = "stop" ]; then
+            aws ec2 stop-instances --instance-ids ${{ github.event.inputs.instance_id }}
+            echo "🛑 Instance stopped: ${{ github.event.inputs.instance_id }}"
+          else
+            echo "❌ Invalid action"
+            exit 1
+          fi
