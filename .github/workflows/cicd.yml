@@ -2,7 +2,7 @@ name: firstflow
 on: workflow_dispatch
 jobs:
   first_job:
-    runs-on: runner1-ip-172-31-15-208
+    runs-on: self1
     steps:
       - name: print greeting
         run: echo "hellow world!"
