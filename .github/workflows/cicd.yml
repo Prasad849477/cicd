@@ -1,4 +1,5 @@
-name: EC2Start/Stop
+name: EC2 Start/Stop
+
 on:
   workflow_dispatch:
     inputs:
@@ -6,7 +7,6 @@ on:
         description: 'Start or stop the instance'
         required: true
         default: 'start'
-        type: choice
         options:
           - start
           - stop
@@ -19,16 +19,14 @@ jobs:
     runs-on: self1
 
     steps:
-      - name: 
-          Stage 1: Configure AWS credentials
+      - name: 🧼 Stage 1: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: 
-          Stage 2: Start or stop EC2 instance
+      - name: 🚀 Stage 2: Start or stop EC2 instance
         run: |
           echo "Requested Action: ${{ github.event.inputs.action }}"
           echo "Instance ID: ${{ github.event.inputs.instance_id }}"
@@ -43,3 +41,6 @@ jobs:
             echo "❌ Invalid action"
             exit 1
           fi
+
+      - name: ✅ Stage 3: Done
+        run: echo "🎉 EC2 ${{ github.event.inputs.action }} action completed!"
