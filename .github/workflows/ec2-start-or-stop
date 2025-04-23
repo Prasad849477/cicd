@@ -1,5 +1,4 @@
-name: EC2 Start/Stop
-
+name: EC2Start/Stop
 on:
   workflow_dispatch:
     inputs:
