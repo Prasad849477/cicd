@@ -1,0 +1,5 @@
+- name: Configure AWS credentials (username/password – for testing only)
+  run: |
+    echo "Username: ${{ secrets.AWS_USERNAME }}"
+    echo "Password: ${{ secrets.AWS_PASSWORD }}"
+    echo "⚠️ Note: AWS CLI does NOT support username/password auth directly"
