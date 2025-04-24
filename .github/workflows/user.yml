@@ -1,4 +1,4 @@
-name: EC2Start/Stop
+name: EC2Start-stop-username
 
 on:
   workflow_dispatch:
