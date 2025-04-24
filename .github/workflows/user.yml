@@ -1,44 +1,12 @@
-name: EC2Start-stop-username
+name: stop EC2 Instance
 
 on:
   workflow_dispatch:
-    inputs:
-      action:
-        description: 'Start or stop the instance'
-        required: true
-        default: 'start'
-        type: choice
-        options:
-          - start
-          - stop
-      instance_id:
-        description: 'EC2 Instance ID'
-        required: true
 
 jobs:
-  manage-ec2:
-    runs-on: self1
+  start-ec2:
+    runs-on: self1 
 
     steps:
-      - name: Configure AWS credentials (username/password – for testing only)
-        run: 
-          echo "Username: ${{ secrets.AWS_USERNAME }}"
-          echo "Password: ${{ secrets.AWS_PASSWORD }}"
-          echo "⚠️ Note: AWS CLI does NOT support username/password auth directly"
-       
-      - name: Start or stop EC2 instance
-        run: |
-          echo "Requested Action: ${{ github.event.inputs.action }}"
-          echo "Instance ID: ${{ github.event.inputs.instance_id }}"
-
-          if [ "${{ github.event.inputs.action }}" = "start" ]; then
-            aws ec2 start-instances --instance-ids ${{ github.event.inputs.instance_id }}
-            echo "✅ Instance started: ${{ github.event.inputs.instance_id }}"
-          elif [ "${{ github.event.inputs.action }}" = "stop" ]; then
-            aws ec2 stop-instances --instance-ids ${{ github.event.inputs.instance_id }}
-            echo "🛑 Instance stopped: ${{ github.event.inputs.instance_id }}"
-          else
-            echo "❌ Invalid action"
-            exit 1
-          fi
-
+      - name: Start EC2 instance
+        run: aws ec2 start-instances --instance-ids i-0123456789abcdef0
