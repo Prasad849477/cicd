@@ -9,4 +9,4 @@ jobs:
 
     steps:
       - name: Start EC2 instance
-        run: aws ec2 start-instances --instance-ids i-0123456789abcdef0
+        run: aws ec2 start-instances --instance-ids i-05d64044e9bbd7ea8
